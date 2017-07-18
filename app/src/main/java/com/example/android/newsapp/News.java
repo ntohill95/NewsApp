@@ -8,27 +8,23 @@ import android.graphics.Bitmap;
 
 public class News {
 
-    private Bitmap mImage;
     private String mArticleTitle;
-    private String mArticleDescription;
     private String mUrl;
+    private String mSection;
 
-    public News(Bitmap image, String articleTitle, String articleDescription, String url){
-        mImage=image;
+    public News(String section, String articleTitle, String url){
+        mSection=section;
         mArticleTitle=articleTitle;
-        mArticleDescription=articleDescription;
         mUrl=url;
     }
 
-    public Bitmap getmImage(){
-        return mImage;
+    public String getSection(){
+        return mSection;
     }
     public String getmArticleTitle(){
         return mArticleTitle;
     }
-    public String getmArticleDescription(){
-        return mArticleDescription;
-    }
+
     public String getUrl(){
         return mUrl;
     }

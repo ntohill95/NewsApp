@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="minHeight">180dp</dimen>
+    <dimen name="minHeight">120dp</dimen>
     <dimen name="list_padding">10dp</dimen>
-    <dimen name="cardMinHeight">150dp</dimen>
+    <dimen name="cardMinHeight">100dp</dimen>
     <dimen name="titleSize">20sp</dimen>
     <dimen name="descriptionSize">12sp</dimen>
     <dimen name="titlePadding">3dp</dimen>

@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private TextView mEmptyStateTextView;
     private NewsAdaptor mAdapter;
     private RecyclerView newsList;
-    private static final String USGS_REQUEST_URL ="https://newsapi.org/v1/articles?source=national-geographic&sortBy=top&apiKey=11bf4d6875a044efbc2b6b1b860af9ef";
+    private static final String USGS_REQUEST_URL ="https://content.guardianapis.com/search?api-key=eb90884c-fd1b-4aad-8bd5-5a9bc6e9e51e";
     private static final int NEWS_LOADER_ID = 1;
 
     @Override

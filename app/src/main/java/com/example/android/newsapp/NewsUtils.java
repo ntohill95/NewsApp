@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.R.attr.bitmap;
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
 /**
  * Created by Niamh on 16/07/2017.
@@ -55,7 +56,7 @@ public class NewsUtils {
         }
         return url;
     }
-
+//not used in this project but worked in my original app using newsapi.com where i got to experiment with downloading an image from a url
     public static byte[] getBitmapFromURL(String urlString) {
         try {
             Bitmap bitmap = BitmapFactory.decodeStream(createUrl(urlString).openStream());
@@ -138,20 +139,23 @@ public class NewsUtils {
             JSONObject obj = new JSONObject(newsJSON);
             Log.i("NiamhTest", "This is the JSON -> " + obj.toString());
             //extract "items" jsonarray
-            if (obj.has("articles")) {
-                JSONArray newsArray = obj.getJSONArray("articles");
-                //loop through array
-                for (int i = 0; i < newsArray.length(); i++) {
-                    JSONObject currentNewsItem = newsArray.getJSONObject(i);
-                    //extract author, title, url
-                    String title = currentNewsItem.getString("title");
-                    String description = currentNewsItem.getString("description");
-                    String url = currentNewsItem.getString("url");
-                    byte[] imageData = getBitmapFromURL(currentNewsItem.getString("urlToImage"));
-                    Bitmap imageBitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
-                    //create earthquake object with location mag time ..
-                    News news1 = new News(imageBitmap, title, description, url);
-                    news.add(news1);
+            if (obj.has("response")) {
+                JSONObject newsObject = obj.getJSONObject("response");
+                JSONArray results = newsObject.getJSONArray("results");
+                for (int i = 0; i < results.length(); i++) {
+                    JSONObject currentNewsItem = results.getJSONObject(i);
+                    for(int j=0; j<currentNewsItem.length(); j++) {
+                        //extract author, title, url
+                        String title = currentNewsItem.getString("webTitle");
+                        String section = currentNewsItem.getString("sectionName");
+                        //String description = results.getString("description");
+                        String url = currentNewsItem.getString("webUrl");
+                        //byte[] imageData = getBitmapFromURL(currentNewsItem.getString("urlToImage"));
+                        //Bitmap imageBitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
+                        //create earthquake object with location mag time ..
+                        News news1 = new News(section, title, url);
+                        news.add(news1);
+                    }
                 }
             } else {
                 Log.i("NiamhTest","Did not find articles");

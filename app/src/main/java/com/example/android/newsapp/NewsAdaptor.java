@@ -60,25 +60,22 @@ public class NewsAdaptor extends RecyclerView.Adapter<NewsAdaptor.NewsViewHolder
     @Override
     public void onBindViewHolder(NewsViewHolder holder, int position) {
         holder.setNewsItem(getItemAt(position));
-        holder.imageView.setImageBitmap(holder.newsItem.getmImage());
+        holder.newsSection.setText(holder.newsItem.getSection());
         holder.newsTitle.setText(holder.newsItem.getmArticleTitle());
-        holder.newsDescription.setText(holder.newsItem.getmArticleDescription());
     }
 
     public class NewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private News newsItem;
         private final Context context;
-        private ImageView imageView;
+        private TextView newsSection;
         private TextView newsTitle;
-        private TextView newsDescription;
 
         public NewsViewHolder(View itemView) {
             super(itemView);
             Log.i("NiamhTest","Init a NewsViewsHolder");
             context = itemView.getContext();
-            imageView = (ImageView) itemView.findViewById(R.id.news_image);
+            newsSection =(TextView)itemView.findViewById(R.id.article_section);
             newsTitle = (TextView) itemView.findViewById(R.id.article_heading);
-            newsDescription = (TextView) itemView.findViewById(R.id.article_description);
             itemView.setOnClickListener(this);
         }
 
