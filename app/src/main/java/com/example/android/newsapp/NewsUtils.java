@@ -21,8 +21,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.R.attr.bitmap;
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
+
 
 /**
  * Created by Niamh on 16/07/2017.
@@ -57,24 +56,6 @@ public class NewsUtils {
         return url;
     }
 
-    //not used in this project but worked in my original app using newsapi.com where i got to experiment with downloading an image from a url
-    public static byte[] getBitmapFromURL(String urlString) {
-        try {
-            Bitmap bitmap = BitmapFactory.decodeStream(createUrl(urlString).openStream());
-            if (bitmap == null) {
-                Log.i("NiamhTest", "THe bitmap is null");
-                return null;
-            }
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
-            return outputStream.toByteArray();
-        } catch (IOException e) {
-            Log.i("NiamhTest", "Got exception for getting image bitmap. UrlString -> " + urlString);
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     private static String makeHttpRequest(URL url) throws IOException {
         String jsonResponse = "";
 
@@ -92,8 +73,6 @@ public class NewsUtils {
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
 
-            // If the request was successful (response code 200),
-            // then read the input stream and parse the response.
             if (urlConnection.getResponseCode() == 200) {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
@@ -107,9 +86,6 @@ public class NewsUtils {
                 urlConnection.disconnect();
             }
             if (inputStream != null) {
-                // Closing the input stream could throw an IOException, which is why
-                // the makeHttpRequest(URL url) method signature specifies than an IOException
-                // could be thrown.
                 inputStream.close();
             }
         }
@@ -146,14 +122,9 @@ public class NewsUtils {
                     JSONArray results = newsObject.getJSONArray("results");
                     for (int i = 0; i < results.length(); i++) {
                         JSONObject currentNewsItem = results.getJSONObject(i);
-                        //extract author, title, url
                         String title = currentNewsItem.getString("webTitle");
                         String section = currentNewsItem.getString("sectionName");
-                        //String description = results.getString("description");
                         String url = currentNewsItem.getString("webUrl");
-                        //byte[] imageData = getBitmapFromURL(currentNewsItem.getString("urlToImage"));
-                        //Bitmap imageBitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
-                        //create earthquake object with location mag time ..
                         News news1 = new News(section, title, url);
                         news.add(news1);
 

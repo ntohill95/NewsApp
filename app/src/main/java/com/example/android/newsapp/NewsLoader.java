@@ -24,8 +24,6 @@ public class NewsLoader extends AsyncTaskLoader<List<News>>  {
         if (mUrl == null) {
             return null;
         }
-
-        // Perform the network request, parse the response, and extract a list of books.
         List<News> news = NewsUtils.fetchNewsData(mUrl);
         return news;
     }

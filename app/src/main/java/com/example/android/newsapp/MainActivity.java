@@ -40,11 +40,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<List<News>> loader, List<News> news) {
         Log.i("NiamhTest","loader finished loading - Should have news!!!");
-        // Clear the adapter of previous book data
         View mLoadingBar = findViewById(R.id.loading_spinner);
         mLoadingBar.setVisibility(View.GONE);
         newsList.setVisibility(View.VISIBLE);
-//        mEmptyStateTextView.setText(R.string.no_news);
         mAdapter.setNewsList(new ArrayList<News>());
         if (news != null && !news.isEmpty()) {
             mAdapter.setNewsList(news);
@@ -63,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        //Get the query given by the user
     }
 
     @Override
@@ -79,8 +76,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         this.newsList = (RecyclerView) findViewById(R.id.list);
 
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
-//        newsList.setEmptyView(mEmptyStateTextView);
-
         mAdapter = new NewsAdaptor();
         newsList.setAdapter(mAdapter);
         newsList.setLayoutManager(new LinearLayoutManager(this));
@@ -94,7 +89,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if (isConnected) {
             newsList.setVisibility(View.VISIBLE);
             LoaderManager loaderManager = getLoaderManager();
-            //Restart the Loader upon the search query(execute the search)
             loaderManager.initLoader(NEWS_LOADER_ID, null, this);
         }
         //If the device is not connected to the network
