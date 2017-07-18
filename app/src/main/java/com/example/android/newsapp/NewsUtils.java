@@ -141,20 +141,22 @@ public class NewsUtils {
             //extract "items" jsonarray
             if (obj.has("response")) {
                 JSONObject newsObject = obj.getJSONObject("response");
-                JSONArray results = newsObject.getJSONArray("results");
-                for (int i = 0; i < results.length(); i++) {
-                    JSONObject currentNewsItem = results.getJSONObject(i);
-                    for(int j=0; j<currentNewsItem.length(); j++) {
-                        //extract author, title, url
-                        String title = currentNewsItem.getString("webTitle");
-                        String section = currentNewsItem.getString("sectionName");
-                        //String description = results.getString("description");
-                        String url = currentNewsItem.getString("webUrl");
-                        //byte[] imageData = getBitmapFromURL(currentNewsItem.getString("urlToImage"));
-                        //Bitmap imageBitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
-                        //create earthquake object with location mag time ..
-                        News news1 = new News(section, title, url);
-                        news.add(news1);
+                if(newsObject.has("results")) {
+                    JSONArray results = newsObject.getJSONArray("results");
+                    for (int i = 0; i < results.length(); i++) {
+                        JSONObject currentNewsItem = results.getJSONObject(i);
+                        for (int j = 0; j < currentNewsItem.length(); j++) {
+                            //extract author, title, url
+                            String title = currentNewsItem.getString("webTitle");
+                            String section = currentNewsItem.getString("sectionName");
+                            //String description = results.getString("description");
+                            String url = currentNewsItem.getString("webUrl");
+                            //byte[] imageData = getBitmapFromURL(currentNewsItem.getString("urlToImage"));
+                            //Bitmap imageBitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
+                            //create earthquake object with location mag time ..
+                            News news1 = new News(section, title, url);
+                            news.add(news1);
+                        }
                     }
                 }
             } else {
