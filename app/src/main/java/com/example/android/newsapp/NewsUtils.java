@@ -56,11 +56,12 @@ public class NewsUtils {
         }
         return url;
     }
-//not used in this project but worked in my original app using newsapi.com where i got to experiment with downloading an image from a url
+
+    //not used in this project but worked in my original app using newsapi.com where i got to experiment with downloading an image from a url
     public static byte[] getBitmapFromURL(String urlString) {
         try {
             Bitmap bitmap = BitmapFactory.decodeStream(createUrl(urlString).openStream());
-            if(bitmap == null) {
+            if (bitmap == null) {
                 Log.i("NiamhTest", "THe bitmap is null");
                 return null;
             }
@@ -68,7 +69,7 @@ public class NewsUtils {
             bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
             return outputStream.toByteArray();
         } catch (IOException e) {
-            Log.i("NiamhTest","Got exception for getting image bitmap. UrlString -> " + urlString);
+            Log.i("NiamhTest", "Got exception for getting image bitmap. UrlString -> " + urlString);
             e.printStackTrace();
             return null;
         }
@@ -141,34 +142,33 @@ public class NewsUtils {
             //extract "items" jsonarray
             if (obj.has("response")) {
                 JSONObject newsObject = obj.getJSONObject("response");
-                if(newsObject.has("results")) {
+                if (newsObject.has("results")) {
                     JSONArray results = newsObject.getJSONArray("results");
                     for (int i = 0; i < results.length(); i++) {
                         JSONObject currentNewsItem = results.getJSONObject(i);
-                        for (int j = 0; j < currentNewsItem.length(); j++) {
-                            //extract author, title, url
-                            String title = currentNewsItem.getString("webTitle");
-                            String section = currentNewsItem.getString("sectionName");
-                            //String description = results.getString("description");
-                            String url = currentNewsItem.getString("webUrl");
-                            //byte[] imageData = getBitmapFromURL(currentNewsItem.getString("urlToImage"));
-                            //Bitmap imageBitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
-                            //create earthquake object with location mag time ..
-                            News news1 = new News(section, title, url);
-                            news.add(news1);
-                        }
+                        //extract author, title, url
+                        String title = currentNewsItem.getString("webTitle");
+                        String section = currentNewsItem.getString("sectionName");
+                        //String description = results.getString("description");
+                        String url = currentNewsItem.getString("webUrl");
+                        //byte[] imageData = getBitmapFromURL(currentNewsItem.getString("urlToImage"));
+                        //Bitmap imageBitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
+                        //create earthquake object with location mag time ..
+                        News news1 = new News(section, title, url);
+                        news.add(news1);
+
                     }
                 }
             } else {
-                Log.i("NiamhTest","Did not find articles");
+                Log.i("NiamhTest", "Did not find articles");
             }
         } catch (JSONException e) {
             Log.e("QueryUtils", "Problem parsing the news JSON results", e);
         }
 
         // Return the list of books
-        if(news.size() > 0) {
-            Log.i("NiamhTest","The array we have has items in it");
+        if (news.size() > 0) {
+            Log.i("NiamhTest", "The array we have has items in it");
         }
         return news;
     }
